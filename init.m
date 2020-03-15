@@ -1,8 +1,8 @@
 function [sampledData, sampledVicon, sampledTime] = init(dataNum)
 %RESAMPLEDATA Resample the given Vicon Data
-data1 = 'studentdata1.mat';
-data4 = 'studentdata4.mat';
-data9 = 'studentdata9.mat';
+data1 = 'datasets/studentdata1.mat';
+data4 = 'datasets/studentdata4.mat';
+data9 = 'datasets/studentdata9.mat';
 
 switch dataNum
     case 1
