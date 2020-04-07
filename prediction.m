@@ -66,6 +66,7 @@ function [covarEst,uEst] = prediction(uPrev,covarPrev,angVel,acc,dt)
     
     F = eye(15) + dt*A_cal;
     Q = (1e-3)*eye(12);
+    Q(7,7) = (1e-6);
     
     uEst = uPrev + dt*x_dot_cal;
     covarEst = F*covarPrev*F.' + U_cal*dt*Q*U_cal.';

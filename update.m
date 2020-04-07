@@ -1,15 +1,25 @@
 function [uCurr,covar_curr] = update(z_t,covarEst,uEst)
-%% BEFORE RUNNING THE CODE CHANGE NAME TO upd_step
-    %% Parameter Definition
     %z_t - is the sensor data at the time step
+    %% Update using position and orientation from vicon
     C = [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
         0 1 0 0 0 0 0 0 0 0 0 0 0 0 0;
         0 0 1 0 0 0 0 0 0 0 0 0 0 0 0;
         0 0 0 1 0 0 0 0 0 0 0 0 0 0 0;
         0 0 0 0 1 0 0 0 0 0 0 0 0 0 0;
         0 0 0 0 0 1 0 0 0 0 0 0 0 0 0];
+    R = [(1e-6) 0      0      0      0      0;
+          0     (1e-3) 0      0      0      0;
+          0     0      (1e-3) 0      0      0;
+          0     0      0      (1e-6) 0      0;
+          0     0      0      0      (1e-4) 0;
+          0     0      0      0      0      (1e-3)];
+    %% Update using linear velocity from vicon
+    %C = [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0;
+    %     0 0 0 0 0 0 0 1 0 0 0 0 0 0 0;
+    %     0 0 0 0 0 0 0 0 1 0 0 0 0 0 0];
+    %R = (1e-3) * eye(3);
     
-    R = (1e-3)*eye(6);
+    
     K = covarEst*C.'*(inv(C*covarEst*C.' + R));
     
     uCurr = uEst + K*(z_t - C*uEst);
